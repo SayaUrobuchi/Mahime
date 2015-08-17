@@ -12,8 +12,29 @@ function ViewRange(x, y)
 	{
 		self.x = x;
 		self.y = y;
-		self.w = screen_width / tile.width;
-		self.h = screen_height / tile.height;
+		self.adjust_grid_size(16, 16);
+		self.adjust_bound(100, 100);
+	}
+	
+	self.adjust_bound = function(r, c)
+	{
+		self.bound_r = r;
+		self.bound_c = c;
+		self.adjust_position();
+	}
+	
+	self.adjust_position = function()
+	{
+		self.x = Math.max(0, Math.min(self.x, self.bound_r-1));
+		self.y = Math.max(0, Math.min(self.y, self.bound_c-1));
+	}
+	
+	self.adjust_grid_size = function(w, h)
+	{
+		self.grid_width = w;
+		self.grid_height = h;
+		self.w = screen_width / self.grid_width;
+		self.h = screen_height / self.grid_height;
 		self.adjust_view();
 	}
 	
@@ -42,6 +63,7 @@ function ViewRange(x, y)
 			self.x += dis;
 			break;
 		}
+		self.adjust_position();
 		self.adjust_view();
 	}
 	

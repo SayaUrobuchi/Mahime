@@ -3,7 +3,6 @@ function MapScene(map_id, x, y)
 {
 	var self = Scene();
 	
-	var map;
 	var view_range;
 	
 	self.init = function()
@@ -21,20 +20,24 @@ function MapScene(map_id, x, y)
 			y = 0;
 		}
 		view_range = ViewRange(x, y);
-		map = Map(map_id);
-		map.set_view(view_range);
+		self.map = map[map_id];
+		self.map.set_view(view_range);
+		self.character = character[CHARACTER_SAFE];
 	}
 	
 	self.update = function ()
 	{
-		map.set_view(view_range);
-		map.update();
+		self.map.set_view(view_range);
+		self.map.update();
 		return self;
 	}
 	
 	self.draw = function (scr)
 	{
-		map.draw(scr);
+		self.map.draw(scr);
+		self.character.draw_on(scr, 
+			view_range.w/2*self.map.grid_width, view_range.h/2*self.map.grid_height, 
+			self.map.grid_width, self.map.grid_height);
 	}
 	
 	self.onkeyup = function (event)

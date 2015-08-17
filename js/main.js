@@ -38,6 +38,13 @@ function preload()
 function init()
 {
 	preload();
+	
+	// init map related
+	tileset_init();
+	tile_init();
+	map_init();
+	// init char related
+	character_init();
 
 	canvas = document.getElementById("canvas");
 	canvas.width = screen_width;

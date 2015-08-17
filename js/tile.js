@@ -1,28 +1,37 @@
 
-var tile = {
-	width: 32, 
-	height: 32, 
-	g_width: 16, 
-	g_height: 16, 
-	rate: 2, 
-};
-
-var TILE_BASE_TEMPLATE = {
-	width: 480, 
-	height: 256, 
-	width_grid: 480/tile.width, 
-	height_grid: 256/tile.height, 
+function Tile(data)
+{
+	var self = {};
 	
-	get_image: function(tile_data)
+	self.init = function()
 	{
-		return image[tile_data.image];
+		self.tileset = tileset[data.tileset_id];
+		self.image = self.tileset.image;
+		self.width = self.tileset.grid_width;
+		self.height = self.tileset.grid_height;
+		self.pivot_r = data.tileset_r;
+		self.pivot_c = data.tileset_c;
+		self.r = self.pivot_r;
+		self.c = self.pivot_c;
 	}
-};
-
-tile[TILE_BASE = 0] = extend(TILE_BASE_TEMPLATE, {
-	image: "M_BASE", 
-});
-
-tile[TILE_DUNGEON = 1] = extend(TILE_BASE_TEMPLATE, {
-	image: "M_DUNGEON", 
-});
+	
+	self.update = function()
+	{
+	}
+	
+	self.update_on_changed = function(map, x, y)
+	{
+		return false;
+	}
+	
+	self.draw_on = function(scr, x, y, w, h)
+	{
+		scr.drawImage(self.image, 
+			self.c * self.width, self.r * self.height, self.width, self.height, 
+			x, y, w, h);
+	}
+	
+	self.init();
+	
+	return self;
+}
